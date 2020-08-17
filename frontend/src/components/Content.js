@@ -27,7 +27,7 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide directio="up" ref={ref} {...props} />
 })
 
-export default function HelloWorld() {
+export default function Content() {
   const classes = useStyles()
   const [modal, setModal] = useState(false)
   const [result, setResult] = useState("")
