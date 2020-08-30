@@ -1,4 +1,5 @@
 import React, { useState, forwardRef } from 'react';
+
 import { 
   Button, 
   makeStyles,
@@ -13,29 +14,16 @@ import {
 
 import { Close } from '@material-ui/icons'
 
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative',
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1,
-  },
-}));
+import { contentStyle } from '../style/contentStyle.js'
 
 const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide directio="up" ref={ref} {...props} />
+  return <Slide direction="up" ref={ref} {...props} />
 })
 
 export default function Content() {
-  const classes = useStyles()
   const [modal, setModal] = useState(false)
   const [result, setResult] = useState("")
-
-
-  const handleCloseModal = () => {
-    setModal(false)
-  }
+  const contentClass = contentStyle()
 
   const handleOpenModal = () => {
     setModal(true)
@@ -47,21 +35,38 @@ export default function Content() {
 
   return (
     <div className="App">
-      <Button variant="outlined" color="primary" onClick={() => handleOpenModal()}>
+      <Button 
+        variant="outlined" 
+        color="primary" 
+        onClick={() => handleOpenModal()}
+      >
         Open to see content
       </Button>
-      <Button onClick={() => handleCloseModal()}>
+      <Button onClick={() => setModal(false)}>
       </Button>
-      <Dialog fullScreen open={modal} onClose={handleCloseModal} TransitionComponent={Transition}>
-        <AppBar className={classes.appBar}>
+      <Dialog 
+        fullScreen 
+        open={modal} 
+        onClose={() => setModal(false)} 
+        TransitionComponent={Transition}>
+        <AppBar className={contentClass.appBar}>
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleCloseModal} aria-label="close">
+            <IconButton 
+              edge="start" 
+              color="inherit" 
+              onClick={() => setModal(false)} 
+              aria-label="close">
               <Close/>
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
+            <Typography 
+              variant="h6" 
+              className={contentClass.title}>
               {result}
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleCloseModal}>
+            <Button 
+              autoFocus 
+              color="inherit" 
+              onClick={() => setModal(false)}>
               save
             </Button>
           </Toolbar>
